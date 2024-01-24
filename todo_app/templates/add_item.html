@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block title %}To-Do App{% endblock %}
+
+{% block content %}
+  <div class="jumbotron">
+    <h1 class="display-4">Add Item</h1>
+    <p class="lead">Add an item to the to-do list.</p>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <h2>Items</h2>
+      <ul class="list-group mb-4">
+        <form action="/add-item" method = "POST">
+          <p>Title of the to-do item: <input type = "text" name = "title" required /></p>
+          <p><button>Submit</button></p>
+      </form>
+      </ul>
+    </div>
+  </div>
+{% endblock %}

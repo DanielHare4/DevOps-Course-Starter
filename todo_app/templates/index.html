@@ -11,8 +11,46 @@
     <div class="col-md-12">
       <h2>Items</h2>
       <ul class="list-group mb-4">
-        <!-- List the todo items here -->
+        <table>
+          <tr>
+            <th>ID</th>
+            <th>Status</th>
+            <th>Title</th>
+            <th>Change Status</th>
+            <th>Delete Item</th>
+          </tr>
+          {% for item in items %}
+          <tr>
+            <td>
+              {{item.id}}
+            </td>
+            <td>
+              {{item.status}}
+            </td>
+            <td>
+              {{item.title}}
+            </td>
+            <td>
+              <a href="/change-status/{{item.id}}">
+                {% if item.status == "Not Started"%}
+                <button>Mark as completed</button>
+                {% else %}
+                <button>Mark as not started</button>
+                {% endif %}
+              </a>
+            </td>
+            <td>
+              <a href="/delete-item/{{item.id}}">
+                <button>X</button>
+              </a>
+            </td>
+          </tr>
+          {%endfor%}
+        </table>
       </ul>
     </div>
   </div>
+  <a href="/add-item">
+    <button>Add new to-do item</button>
+  </a>
 {% endblock %}
