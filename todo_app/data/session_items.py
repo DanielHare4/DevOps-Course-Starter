@@ -65,12 +65,7 @@ class SessionItems:
         """
         id = int(id)
         items = self.get_items()
-        deleted = False
-        items.remove(items[id-1])
-        # Drop ID of following items by 1
-        for item in items:
-            if item['id'] > id:
-                item['id'] = int(item['id']) - 1
+        items= [item for item in items if item['id'] != id]
 
         session['items'] = items
 

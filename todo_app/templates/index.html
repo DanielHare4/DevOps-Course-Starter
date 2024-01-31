@@ -31,13 +31,13 @@
               {{item.title}}
             </td>
             <td>
-              <a href="/change-status/{{item.id}}">
+              <form action="/change-status/{{item.id}}" method="POST">
                 {% if item.status == "Not Started"%}
                 <button>Mark as completed</button>
                 {% else %}
                 <button>Mark as not started</button>
                 {% endif %}
-              </a>
+              </form>
             </td>
             <td>
               <a href="/delete-item/{{item.id}}">

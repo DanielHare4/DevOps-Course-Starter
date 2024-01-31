@@ -21,7 +21,7 @@ def add_item():
         return redirect('/')
     return render_template("add_item.html")
 
-@app.route('/change-status/<id>')
+@app.route('/change-status/<id>', methods=['POST'])
 def change_status(id):
     item = si.get_item(id)
     if item['status'] == "Not Started":
