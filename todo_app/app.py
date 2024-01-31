@@ -13,15 +13,18 @@ def index():
     items = sorted(items, key=lambda x: x['status'], reverse=True)
     return render_template("index.html", items=items)
 
-@app.route('/add-item', methods=["GET", "POST"])
-def add_item():
-    if request.method == "POST":
-        title = request.form.get("title", "")
-        si.add_item(title)
-        return redirect('/')
+@app.route('/add-item', methods=["GET"])
+def add_item_page():
     return render_template("add_item.html")
 
 @app.route('/change-status/<id>', methods=['POST'])
+@app.route('/add-item', methods=["POST"])
+def add_item():
+    title = request.form.get("title", "")
+    si.add_item(title)
+    return redirect('/')
+
+@app.route('/change-status/<id>', methods=["POST"])
 def change_status(id):
     item = si.get_item(id)
     if item['status'] == "Not Started":
