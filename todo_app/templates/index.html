@@ -28,14 +28,14 @@
               {{item.status}}
             </td>
             <td>
-              {{item.title}}
+              {{item.name}}
             </td>
             <td>
               <form action="/change-status/{{item.id}}" method="POST">
-                {% if item.status == "Not Started"%}
-                <button>Mark as completed</button>
+                {% if item.status == "To Do"%}
+                <button>Mark as done</button>
                 {% else %}
-                <button>Mark as not started</button>
+                <button>Mark as to do</button>
                 {% endif %}
               </form>
             </td>
