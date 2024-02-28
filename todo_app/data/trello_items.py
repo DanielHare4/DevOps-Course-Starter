@@ -12,29 +12,25 @@ class Item:
     @classmethod
     def from_trello_card(cls, card):
         return cls(card['id'], card['name'], card['status'])
-    
-    @classmethod
-    def get_items(cls):
-        cards = TrelloItems().get_cards()
-        return [Item.from_trello_card(card) for card in cards]
 
 
 class TrelloItems:
     def __init__(self):
-        self.url = 'https://api.trello.com/1/'
-        self.board_id = Config().TRELLO_BOARD_ID
-        self.todo = Config().TRELLO_LIST_ID_TODO
-        self.done = Config().TRELLO_LIST_ID_DONE
+        self.url = "https://api.trello.com/1/"
+        config = Config()
+        self.board_id = config.TRELLO_BOARD_ID
+        self.todo = config.TRELLO_LIST_ID_TODO
+        self.done = config.TRELLO_LIST_ID_DONE
         self.query = {
-            'key': Config().TRELLO_API_KEY,
-            'token': Config().TRELLO_API_TOKEN
+            'key': config.TRELLO_API_KEY,
+            'token': config.TRELLO_API_TOKEN
         }
         self.headers = {
             "Accept": "application/json"
         }
 
     def get_cards(self):
-        url = self.url + f'boards/{self.board_id}/cards'
+        url = self.url + f"boards/{self.board_id}/cards"
 
         response = requests.request(
             "GET",
@@ -52,8 +48,12 @@ class TrelloItems:
             })
         return cards
     
+    def get_items(self):
+        cards = self.get_cards()
+        return [Item.from_trello_card(card) for card in cards]
+    
     def add_card(self, title):
-        url = self.url + f'cards'
+        url = self.url + "cards"
 
         self.query['idList'] = self.todo
         self.query['name'] = title
@@ -68,7 +68,7 @@ class TrelloItems:
     
     def delete_card(self, id):
         card = self.get_card_from_id(id)
-        url = self.url + f'cards/{card['card_id']}'
+        url = self.url + f"cards/{card['card_id']}"
 
         response = requests.request(
         "DELETE",
@@ -80,7 +80,7 @@ class TrelloItems:
     def change_card(self, id):
         card = self.get_card_from_id(id)
         new_list = self.get_changed_list(card['list_id'])
-        url = self.url + f'cards/{card['card_id']}'
+        url = self.url + f"cards/{card['card_id']}"
 
         self.query['idList'] = new_list
 

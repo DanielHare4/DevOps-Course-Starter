@@ -9,7 +9,7 @@ trello = TrelloItems()
 
 @app.route('/')
 def index():
-    items = Item.get_items()
+    items = trello.get_items()
     items = sorted(items, key=lambda x: x.id)
     items = sorted(items, key=lambda x: x.status, reverse=True)
     return render_template("index.html", items=items)

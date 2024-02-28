@@ -46,7 +46,7 @@ The app links to a Trello workspace, to get this running you'll need to :
 -- To do this you’ll first need to create a Trello Power Up (https://trello.com/power-ups/admin)
 -- After creating a Trello Power Up you’ll be given the option to generate a new API key
 - Create a API Token for Trello.
-- Add the key and toekn to your .env file
+- Add the key and token to your .env file
 - Add the id's for your board and lists ('To Do' and 'Done')
 
 ## Running the App
