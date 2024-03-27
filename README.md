@@ -68,3 +68,10 @@ Press CTRL+C to quit
  * Debugger PIN: 113-666-066
 ```
 Now visit [`http://localhost:5000/`](http://localhost:5000/) in your web browser to view the app.
+
+## Running Tests
+
+Tests are located in the test folder.
+To run all tests, run the command `pytest` from your terminal
+To run all tests in a directory, run `poetry run pytest <<directory>>`
+To run an indiviual test, run the command `pytest -k <<test_name>>` from your terminal or run from vscode > testing

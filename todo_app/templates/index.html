@@ -9,23 +9,56 @@
 
   <div class="row">
     <div class="col-md-12">
-      <h2>Items</h2>
+      <h2>To Do Items</h2>
       <ul class="list-group mb-4">
         <table>
           <tr>
             <th>ID</th>
-            <th>Status</th>
             <th>Title</th>
             <th>Change Status</th>
             <th>Delete Item</th>
           </tr>
-          {% for item in items %}
+          {% for item in view_model.todo_items %}
           <tr>
             <td>
               {{item.id}}
             </td>
             <td>
-              {{item.status}}
+              {{item.name}}
+            </td>
+            <td>
+              <form action="/change-status/{{item.id}}" method="POST">
+                {% if item.status == "To Do"%}
+                <button>Mark as done</button>
+                {% else %}
+                <button>Mark as to do</button>
+                {% endif %}
+              </form>
+            </td>
+            <td>
+              <a href="/delete-item/{{item.id}}">
+                <button>X</button>
+              </a>
+            </td>
+          </tr>
+          {%endfor%}
+        </table>
+      </ul>
+    </div>
+    <div class="col-md-12">
+      <h2>Done Items</h2>
+      <ul class="list-group mb-4">
+        <table>
+          <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Change Status</th>
+            <th>Delete Item</th>
+          </tr>
+          {% for item in view_model.done_items %}
+          <tr>
+            <td>
+              {{item.id}}
             </td>
             <td>
               {{item.name}}

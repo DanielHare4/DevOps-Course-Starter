@@ -32,8 +32,7 @@ class TrelloItems:
     def get_cards(self):
         url = self.url + f"boards/{self.board_id}/cards"
 
-        response = requests.request(
-            "GET",
+        response = requests.get(
             url,
             params=self.query
         )
@@ -58,8 +57,7 @@ class TrelloItems:
         self.query['idList'] = self.todo
         self.query['name'] = title
 
-        response = requests.request(
-        "POST",
+        response = requests.post(
         url,
         headers=self.headers,
         params=self.query
@@ -70,8 +68,7 @@ class TrelloItems:
         card = self.get_card_from_id(id)
         url = self.url + f"cards/{card['card_id']}"
 
-        response = requests.request(
-        "DELETE",
+        response = requests.delete(
         url,
         params=self.query
         )
@@ -84,8 +81,7 @@ class TrelloItems:
 
         self.query['idList'] = new_list
 
-        response = requests.request(
-            "PUT",
+        response = requests.put(
             url,
             headers=self.headers,
             params=self.query
@@ -109,3 +105,43 @@ class TrelloItems:
         for card in cards:
             if int(id) == card['id']:
                 return card
+
+# Test functions
+    def create_test_board(self):
+        url = self.url + 'boards'
+        self.query['name'] = 'TEST'
+
+        response = requests.post(
+            url,
+            params=self.query
+        )
+        id = response.json()['shortUrl']
+        # shortUrl = 'https://trello.com/b/{board_id}'
+        id = id.replace('https://trello.com/b/','')
+        return id
+    
+    def get_todo_and_done_lists(self, board_id):
+        url = self.url + f'boards/{board_id}/lists'
+        headers = {
+            "Accept": "application/json"
+        }
+        response = requests.get(
+            url,
+            headers=headers,
+            params=self.query
+        )
+        for item in response.json():
+            if item['name'] == 'To Do':
+                todo = item['id']
+            elif item['name'] == 'Done':
+                done = item['id']
+        return todo, done
+
+    
+    def delete_test_board(self, board_id):
+        url = self.url + f'boards/{board_id}'
+        response = requests.delete(
+            url,
+            params=self.query
+        )
+        return response.status_code
