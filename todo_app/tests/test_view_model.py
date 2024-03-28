@@ -16,8 +16,10 @@ def test_view_model_done_property(view_model: ViewModel):
     done_items = view_model.done_items
     for item in done_items:
         assert item.status == 'Done'
+    assert len(done_items) == 1
 
 def test_view_model_todo_property(view_model: ViewModel):
     todo_items = view_model.todo_items
     for item in todo_items:
         assert item.status == 'To Do'
+    assert len(todo_items) == 1

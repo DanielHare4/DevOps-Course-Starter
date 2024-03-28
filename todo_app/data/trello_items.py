@@ -17,16 +17,18 @@ class Item:
 class TrelloItems:
     def __init__(self):
         self.url = "https://api.trello.com/1/"
-        config = Config()
-        self.board_id = config.TRELLO_BOARD_ID
-        self.todo = config.TRELLO_LIST_ID_TODO
-        self.done = config.TRELLO_LIST_ID_DONE
-        self.query = {
-            'key': config.TRELLO_API_KEY,
-            'token': config.TRELLO_API_TOKEN
-        }
+        self.config = Config()
+        self.board_id = self.config.TRELLO_BOARD_ID
+        self.todo = self.config.TRELLO_LIST_ID_TODO
+        self.done = self.config.TRELLO_LIST_ID_DONE
         self.headers = {
             "Accept": "application/json"
+        }
+
+    def query(self):
+        return {
+            'key': self.config.TRELLO_API_KEY,
+            'token': self.config.TRELLO_API_TOKEN
         }
 
     def get_cards(self):
@@ -34,7 +36,7 @@ class TrelloItems:
 
         response = requests.get(
             url,
-            params=self.query
+            params=self.query()
         )
         cards = []
         for card in response.json():
@@ -54,13 +56,14 @@ class TrelloItems:
     def add_card(self, title):
         url = self.url + "cards"
 
-        self.query['idList'] = self.todo
-        self.query['name'] = title
+        query = self.query()
+        query['idList'] = self.todo
+        query['name'] = title
 
         response = requests.post(
         url,
         headers=self.headers,
-        params=self.query
+        params=query
         )
         return response.status_code
     
@@ -70,7 +73,7 @@ class TrelloItems:
 
         response = requests.delete(
         url,
-        params=self.query
+        params=self.query()
         )
         return response.status_code
     
@@ -79,12 +82,13 @@ class TrelloItems:
         new_list = self.get_changed_list(card['list_id'])
         url = self.url + f"cards/{card['card_id']}"
 
-        self.query['idList'] = new_list
+        query = self.query()
+        query['idList'] = new_list
 
         response = requests.put(
             url,
             headers=self.headers,
-            params=self.query
+            params=query
         )
         return response.status_code
 
@@ -109,11 +113,12 @@ class TrelloItems:
 # Test functions
     def create_test_board(self):
         url = self.url + 'boards'
-        self.query['name'] = 'TEST'
+        query = self.query()
+        query['name'] = 'TEST'
 
         response = requests.post(
             url,
-            params=self.query
+            params=query
         )
         id = response.json()['shortUrl']
         # shortUrl = 'https://trello.com/b/{board_id}'
@@ -128,7 +133,7 @@ class TrelloItems:
         response = requests.get(
             url,
             headers=headers,
-            params=self.query
+            params=self.query()
         )
         for item in response.json():
             if item['name'] == 'To Do':
@@ -142,6 +147,6 @@ class TrelloItems:
         url = self.url + f'boards/{board_id}'
         response = requests.delete(
             url,
-            params=self.query
+            params=self.query()
         )
         return response.status_code
