@@ -71,14 +71,14 @@ Now visit [`http://localhost:5000/`](http://localhost:5000/) in your web browser
 
 ## Running Tests
 
-Tests are located in the test folder.
-To run all tests, run the command `pytest` from your terminal
-To run all tests in a directory, run `poetry run pytest <<directory>>`
-To run an indiviual test, run the command `pytest -k <<test_name>>` from your terminal or run from vscode > testing
+- Tests are located in the test folder.
+- To run all tests, run the command `pytest` from your terminal
+- To run all tests in a directory, run `poetry run pytest <<directory>>`
+- To run an indiviual test, run the command `pytest -k <<test_name>>` from your terminal or run from vscode > testing
 
 ## Provisioning a VM from an Ansible Control Node
 
-Set up SSH from the Control to Host(s) ansible node(s)
-Copy/Recreate the files in the ansible folder onto the control node
-Update the necessary values in `.env.j2` and `ansible-inventory`
-Run `ansible-playbook ansible-playbook.yml -i ansible-inventory` to provision
+- Set up SSH from the Control to Host(s) ansible node(s)
+- Copy/Recreate the files in the ansible folder onto the control node
+- Update the necessary values in `.env.j2` and `ansible-inventory`
+- Run `ansible-playbook ansible-playbook.yml -i ansible-inventory` to provision
