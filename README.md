@@ -49,7 +49,7 @@ The app links to a Trello workspace, to get this running you'll need to :
 - Add the key and token to your .env file
 - Add the id's for your board and lists ('To Do' and 'Done')
 
-## Running the App
+## Running the App (Locally)
 
 Once the all dependencies have been installed, start the Flask app in development mode within the Poetry environment by running:
 ```bash
@@ -68,6 +68,19 @@ Press CTRL+C to quit
  * Debugger PIN: 113-666-066
 ```
 Now visit [`http://localhost:5000/`](http://localhost:5000/) in your web browser to view the app.
+
+## Running the App (Docker)
+
+To run on docker us the following bash commands
+```
+# Development
+docker build --target development --tag todo-app:dev .
+docker run -it --env-file ./.env -p 5000:5000 --mount "type=bind,source=$(pwd)/todo_app,target=/app/todo_app" todo-app:dev
+
+# Production
+docker build --target production --tag todo-app:prod .  
+docker run -it --env-file ./.env -p 5000:5000 todo-app:prod
+```
 
 ## Running Tests
 
