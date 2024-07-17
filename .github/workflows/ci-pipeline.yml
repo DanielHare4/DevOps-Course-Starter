@@ -1,5 +1,15 @@
 name: Continuous Integration
-on: [push]
+on:
+  push:
+    paths-ignore:
+      - 'README.md'
+      - 'ansible/**'
+      - 'diagrams/**'
+  pull_request:
+    paths-ignore:
+        - 'README.md'
+        - 'ansible/**'
+        - 'diagrams/**'
 
 jobs:
   build:
@@ -7,4 +17,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - run: echo Hello World
+    - run: |
+        docker build --target tests --tag todo-app:tests .
+        docker run --env-file ./.env.test todo-app:tests
