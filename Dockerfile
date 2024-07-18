@@ -18,5 +18,4 @@ ENTRYPOINT poetry run flask run --host=0.0.0.0
 
 # CI tests
 FROM base AS tests
-ENV PYTHONPATH=/app
 ENTRYPOINT poetry run pytest ./todo_app/tests
