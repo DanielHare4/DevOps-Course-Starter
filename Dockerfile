@@ -15,3 +15,7 @@ ENTRYPOINT poetry run flask run --host=0.0.0.0
 FROM base AS development
 ENV FLASK_DEBUG=true
 ENTRYPOINT poetry run flask run --host=0.0.0.0
+
+# CI tests
+FROM base AS tests
+ENTRYPOINT poetry run pytest ./todo_app/tests
