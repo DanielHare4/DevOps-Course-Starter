@@ -43,8 +43,8 @@ The `.env` file is used by flask to set environment variables when running `flas
 The app links to a Trello workspace, to get this running you'll need to :
 - Create a Trello account https://trello.com/signup
 - Create an API Key for Trello
--- To do this you’ll first need to create a Trello Power Up (https://trello.com/power-ups/admin)
--- After creating a Trello Power Up you’ll be given the option to generate a new API key
+    - To do this you’ll first need to create a Trello Power Up (https://trello.com/power-ups/admin)
+    - After creating a Trello Power Up you’ll be given the option to generate a new API key
 - Create a API Token for Trello.
 - Add the key and token to your .env file
 - Add the id's for your board and lists ('To Do' and 'Done')
@@ -89,8 +89,8 @@ docker run -it --env-file ./.env -p 5000:5000 todo-app:prod
 - To run all tests in a directory, run `poetry run pytest <<directory>>`
 - To run an indiviual test, run the command `pytest -k <<test_name>>` from your terminal or run from vscode > testing
 - In Docker:
--- `docker build --target tests --tag todo-app:tests .`
--- `docker run --env-file ./.env.test todo-app:tests`
+    - `docker build --target tests --tag todo-app:tests .`
+    - `docker run --env-file ./.env.test todo-app:tests`
 
 ## Provisioning a VM from an Ansible Control Node
 
@@ -98,3 +98,11 @@ docker run -it --env-file ./.env -p 5000:5000 todo-app:prod
 - Copy/Recreate the files in the ansible folder onto the control node
 - Update the necessary values in `.env.j2` and `ansible-inventory`
 - Run `ansible-playbook ansible-playbook.yml -i ansible-inventory` to provision
+
+## Azure Hosted App
+
+- Azure container image is hosted at https://hub.docker.com/repository/docker/danielharedevops/todo-app/general
+- To build and push use:
+    - `docker build --target production --tag danielharedevops/todo-app .`
+    - `docker push danielharedevops/todo-app`
+- To push to Azure make a POST request to the webhook link in the Deployment Center of Azure.
