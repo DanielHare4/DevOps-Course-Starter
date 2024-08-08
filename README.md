@@ -102,6 +102,7 @@ docker run -it --env-file ./.env -p 5000:5000 todo-app:prod
 ## Azure Hosted App
 
 - Azure container image is hosted at https://hub.docker.com/repository/docker/danielharedevops/todo-app/general
+- Application URL: https://todo-app-service.azurewebsites.net/
 - To build and push use:
     - `docker build --target production --tag danielharedevops/todo-app .`
     - `docker push danielharedevops/todo-app`
