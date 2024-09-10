@@ -34,3 +34,4 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
       - run: docker build --target production --tag danielharedevops/todo-app .
       - run: docker push danielharedevops/todo-app
+      - run: curl -dH -X POST '${{ secrets.APP_SERVICE_WEBHOOK_URL }}'
