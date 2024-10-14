@@ -1,5 +1,5 @@
 from todo_app.data.view_model import ViewModel
-from todo_app.data.trello_items import Item
+from todo_app.data.items import Item
 import pytest
 
 test_cards = [
@@ -9,7 +9,7 @@ test_cards = [
 
 @pytest.fixture
 def view_model() -> ViewModel:
-    test_items = [Item.from_trello_card(card) for card in test_cards]
+    test_items = [Item.from_mongodb_document(card) for card in test_cards]
     return ViewModel(test_items)
 
 def test_view_model_done_property(view_model: ViewModel):
