@@ -1,41 +1,36 @@
 import os
 import pytest
+import mongomock
+import pymongo
 from time import sleep
 from threading import Thread
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
-from dotenv import load_dotenv
+from dotenv import load_dotenv, find_dotenv
 from todo_app import app
-from todo_app.data.trello_items import TrelloItems
+from todo_app.data.mongodb_items import MongoDBItems
 
 @pytest.fixture(scope='module')
 def app_with_temp_board():
     # Load our real environment variables
-    load_dotenv(override=True)
-    
-    # Create the new board & update the board id environment variable
-    board_id = TrelloItems().create_test_board()
-    todo, done = TrelloItems().get_todo_and_done_lists(board_id)
-    os.environ['TRELLO_BOARD_ID'] = board_id
-    os.environ['TRELLO_LIST_ID_TODO'] = todo
-    os.environ['TRELLO_LIST_ID_DONE'] = done
+    file_path = find_dotenv('.env.test')
+    load_dotenv(file_path, override=True)
 
-    # Construct the new application
-    application = app.create_app()
+    with mongomock.patch(servers=(('fakemongo.com', 27017),)):
+        application = app.create_app()
 
-    # Start the app in its own thread.
-    thread = Thread(target=lambda: application.run(use_reloader=False))
-    thread.daemon = True
-    thread.start()
-    # Give the app a moment to start
-    sleep(1)
+        # Start the app in its own thread.
+        thread = Thread(target=lambda: application.run(use_reloader=False))
+        thread.daemon = True
+        thread.start()
+        # Give the app a moment to start
+        sleep(1)
 
-    yield application
+        yield application
 
     # Tear Down
-    thread.join(1)
-    TrelloItems().delete_test_board(board_id)
+    MongoDBItems.drop_collection(os.environ.get('MONGODB_COLLECTION_NAME'))
 
 @pytest.fixture(scope="module")
 def driver():
