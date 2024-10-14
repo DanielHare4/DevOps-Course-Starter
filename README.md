@@ -38,16 +38,19 @@ $ cp .env.template .env  # (first time only)
 
 The `.env` file is used by flask to set environment variables when running `flask run`. This enables things like development mode (which also enables features like hot reloading when you make a file change). There's also a [SECRET_KEY](https://flask.palletsprojects.com/en/2.3.x/config/#SECRET_KEY) variable which is used to encrypt the flask session cookie.
 
-## Trello
+## MongoDB
 
-The app links to a Trello workspace, to get this running you'll need to :
-- Create a Trello account https://trello.com/signup
-- Create an API Key for Trello
-    - To do this you’ll first need to create a Trello Power Up (https://trello.com/power-ups/admin)
-    - After creating a Trello Power Up you’ll be given the option to generate a new API key
-- Create a API Token for Trello.
-- Add the key and token to your .env file
-- Add the id's for your board and lists ('To Do' and 'Done')
+The app links to a MongoDB database, to get this running you'll need to log into Azure and create a new CosmosDB instance in your resource group:
+
+- With the Portal:
+    - New -> CosmosDB Database
+    - Select “Azure Cosmos DB API for MongoDB”
+    - Choose “Serverless” for Capacity mode
+    - You can also configure secure firewall connections here, but for now you should permit access from “All Networks” to enable easier testing of the integration with the app.
+- With the CLI:
+    - Create new CosmosDB Account: `az cosmosdb create --name <cosmos_account_name> --resource-group <resource_group_name> --kind MongoDB --capabilities EnableServerless --server-version 4.2`
+    - Create new MongoDB database under that account: `az cosmosdb mongodb database create --account-name <cosmos_account_name> --name <database_name> --resource-group <resource_group_name>`
+- Update MongoDB environment variables
 
 ## Running the App (Locally)
 
