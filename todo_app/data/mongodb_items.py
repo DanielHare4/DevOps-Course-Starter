@@ -1,5 +1,6 @@
 from todo_app.flask_config import Config
 from todo_app.data.items import Item
+from enum import Enum, unique
 import pymongo
 
 class MongoDBItems:
@@ -27,7 +28,7 @@ class MongoDBItems:
 
     def change_item_status(self, id):
         current_status = self.collection.find_one({"id": id})["status"]
-        new_status = "Done" if current_status == "To Do" else "To Do"
+        new_status = Status.change_status(current_status)
         self.collection.update_one({"id": id}, {"$set": {"status": new_status}})
 
     def delete_item(self, id):
@@ -35,3 +36,14 @@ class MongoDBItems:
 
     def drop_collection(self, collection_name):
         self.db.drop_collection(collection_name)
+
+@unique
+class Status(Enum):
+    TODO = "To Do"
+    DONE = "Done"
+
+    def change_status(self):
+        if self == Status.TODO.value:
+            return Status.DONE.value
+        elif self == Status.DONE.value:
+            return Status.TODO.value
