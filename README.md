@@ -110,3 +110,10 @@ docker run -it --env-file ./.env -p 5000:5000 todo-app:prod
     - `docker build --target production --tag danielharedevops/todo-app .`
     - `docker push danielharedevops/todo-app`
 - To push to Azure make a POST request to the webhook link in the Deployment Center of Azure.
+
+## Data Encryption
+
+- Encryption-at-rest:
+    - Data is stored in Azure Cosmos DB which is encrypted-at-rest by default (https://learn.microsoft.com/en-us/azure/cosmos-db/database-encryption-at-rest)
+- Encryption-in-transit:
+    - HTTPS is enforced (over HTTP), therefore data is also encrypted in transit.
