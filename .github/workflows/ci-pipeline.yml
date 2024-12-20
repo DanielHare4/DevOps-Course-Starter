@@ -45,6 +45,7 @@ jobs:
           terraform_version: 'latest'
       - run: docker build --target production --tag danielharedevops/todo-app .
       - run: docker push danielharedevops/todo-app
-      - run: cd terraform && terraform init
-      - run: cd terraform && terraform apply -auto-approve -var prefix=danhar
+      - run: cd terraform
+      - run: terraform init
+      - run: terraform apply -auto-approve -var prefix=danhar
       - run: curl -dH -X POST "$(terraform output -raw webhook_url)"
