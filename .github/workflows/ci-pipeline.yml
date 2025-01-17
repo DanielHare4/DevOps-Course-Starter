@@ -47,5 +47,9 @@ jobs:
       - run: docker push danielharedevops/todo-app
       - run: terraform init
       - run: terraform apply -auto-approve -var prefix=danhar
-      - run: echo "$(terraform output -raw webhook_url)"
+      - run: |
+          echo "All Terraform Outputs:"
+          terraform output
+          echo "Webhook URL:"
+          terraform output -raw webhook_url || echo "webhook_url is empty or not defined."
       - run: curl -dH -X POST "$(terraform output -raw webhook_url)"
