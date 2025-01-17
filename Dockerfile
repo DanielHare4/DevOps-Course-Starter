@@ -3,8 +3,8 @@ RUN curl -sSL https://install.python-poetry.org | python3 -
 ENV PATH=$PATH:/root/.local/bin/
 WORKDIR /app
 COPY pyproject.toml poetry.toml /app/
-RUN poetry install
 COPY todo_app /app/todo_app
+RUN poetry install
 
 # Production
 FROM base AS production
