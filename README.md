@@ -117,3 +117,7 @@ docker run -it --env-file ./.env -p 5000:5000 todo-app:prod
     - Data is stored in Azure Cosmos DB which is encrypted-at-rest by default (https://learn.microsoft.com/en-us/azure/cosmos-db/database-encryption-at-rest)
 - Encryption-in-transit:
     - HTTPS is enforced (over HTTP), therefore data is also encrypted in transit.
+
+## Logging
+
+- Logs are set to loggly. To use create an account via https://www.loggly.com/ and add your lOGGLY_TOKEN to the environment variables.
