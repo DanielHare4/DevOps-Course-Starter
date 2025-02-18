@@ -50,10 +50,10 @@ jobs:
       - run: |
           echo "All Terraform Outputs:"
           terraform output
-          OUTPUT_RAW = $(terraform output -raw webhook_url)
-          OUTPUT_JSON = terraform output -json webhook_url
-          echo "1: $(terraform output -json webhook_url)"
-          echo "2: $OUTPUT_RAW"
-          echo "3: $OUTPUT_JSON"
+          terraform output -json webhook_url
+          OUTPUT_RAW=$(terraform output -raw webhook_url)
+          OUTPUT_JSON=$(terraform output -json webhook_url)
+          echo "1: $OUTPUT_RAW"
+          echo "2: $OUTPUT_JSON"
           terraform output -json webhook_url
       - run: curl -dH -X POST "$(terraform output -raw webhook_url)"
