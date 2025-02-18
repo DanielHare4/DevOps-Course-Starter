@@ -40,12 +40,11 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
       - name: Set up Terraform
-        uses: hashicorp/setup-terraform@v1
+        uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: 'latest'
       - run: docker build --target production --tag danielharedevops/todo-app .
       - run: docker push danielharedevops/todo-app
       - run: terraform init
       - run: terraform apply -auto-approve -var prefix=danhar
-      - run: echo "WEBHOOK_URL=$(terraform output -raw webhook_url)" >> $GITHUB_ENV
-      - run: curl -dH -X POST "${{ secrets.WEBHOOK_URL }}"
+      - run: curl -dH -X POST "$(terraform output -raw webhook_url)"
