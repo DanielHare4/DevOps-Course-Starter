@@ -47,13 +47,5 @@ jobs:
       - run: docker push danielharedevops/todo-app
       - run: terraform init
       - run: terraform apply -auto-approve -var prefix=danhar
-      - run: |
-          echo "All Terraform Outputs:"
-          terraform output
-          terraform output -json webhook_url
-          OUTPUT_RAW=$(terraform output -raw webhook_url)
-          OUTPUT_JSON=$(terraform output -json webhook_url)
-          echo "1: $OUTPUT_RAW"
-          echo "2: $OUTPUT_JSON"
-          terraform output -json webhook_url
-      - run: curl -dH -X POST "$(terraform output -raw webhook_url)"
+      - run: echo "WEBHOOK_URL=$(terraform output -raw webhook_url)" >> $GITHUB_ENV
+      - run: curl -dH -X POST "${{ secrets.WEBHOOK_URL }}"
