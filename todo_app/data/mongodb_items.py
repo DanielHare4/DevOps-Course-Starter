@@ -1,6 +1,7 @@
 from todo_app.flask_config import Config
 from todo_app.data.items import Item
 from enum import Enum, unique
+from flask import current_app
 import pymongo
 
 class MongoDBItems:
@@ -11,6 +12,7 @@ class MongoDBItems:
         self.collection = self.db[self.config.MONGODB_COLLECTION_NAME]
 
     def get_items(self):
+        current_app.logger.info('Getting MongoDB items')
         mongodb_documents = list(self.collection.find())
         items = []
         for document in mongodb_documents:

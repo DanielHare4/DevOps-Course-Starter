@@ -14,6 +14,7 @@ selenium = "^4.18.1"
 pymongo = "^4.10.1"
 mongomock = "^4.2.0.post1"
 safety = "^3.2.10"
+loggly-python-handler = "^1.0.1"
 
 [tool.poetry.dev-dependencies]
 

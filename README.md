@@ -118,6 +118,11 @@ docker run -it --env-file ./.env -p 5000:5000 todo-app:prod
 - Encryption-in-transit:
     - HTTPS is enforced (over HTTP), therefore data is also encrypted in transit.
 
+## Logging
+
+- Logs are set to loggly. To use create an account via https://www.loggly.com/ and add your lOGGLY_TOKEN to the environment variables.
+
 ## Deployment
 
 Terraform is used to deploy the azure infrastucture.
+
