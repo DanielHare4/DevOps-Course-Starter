@@ -117,3 +117,7 @@ docker run -it --env-file ./.env -p 5000:5000 todo-app:prod
     - Data is stored in Azure Cosmos DB which is encrypted-at-rest by default (https://learn.microsoft.com/en-us/azure/cosmos-db/database-encryption-at-rest)
 - Encryption-in-transit:
     - HTTPS is enforced (over HTTP), therefore data is also encrypted in transit.
+
+## Deployment
+
+Terraform is used to deploy the azure infrastucture.
