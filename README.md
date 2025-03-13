@@ -125,3 +125,4 @@ docker run -it --env-file ./.env -p 5000:5000 todo-app:prod
 ## Deployment
 
 Terraform is used to deploy the azure infrastucture.
+
