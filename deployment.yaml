@@ -1,0 +1,47 @@
+# deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: module-14
+spec:
+  selector:
+    matchLabels:
+      app: module-14
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: module-14
+    spec:
+      containers:
+        - name: todo-app
+          image: todo-app:prod
+          imagePullPolicy: Never
+          env:
+            - name: FLASK_APP
+              value: todo_app/app
+            - name: FLASK_DEBUG
+              value: "true"
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: todo-app-secrets
+                  key: SECRET_KEY
+            - name: MONGODB_CONNECTION_STRING
+              valueFrom:
+                secretKeyRef:
+                  name: todo-app-secrets
+                  key: MONGODB_CONNECTION_STRING
+            - name: MONGODB_DB_NAME
+              value: todo_app_db
+            - name: MONGODB_COLLECTION_NAME
+              value: todo_app_items
+            - name: LOG_LEVEL
+              value: INFO
+            - name: LOGGLY_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: todo-app-secrets
+                  key: LOGGLY_TOKEN
+          ports:
+          - containerPort: 80

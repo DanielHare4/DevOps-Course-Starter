@@ -126,3 +126,19 @@ docker run -it --env-file ./.env -p 5000:5000 todo-app:prod
 
 Terraform is used to deploy the azure infrastucture.
 
+## Running To-Do app on a minikube cluster
+
+You will need the following installed:
+- Docker
+- Kubectl
+- minikube
+
+Instructions:
+- `minikube start`
+- `docker build --target production --tag todo-app:prod .`
+- `minikube image load todo-app:prod`
+- Create necessary secrets (SECRET_KEY, MONGODB_CONNECTION_STRING, LOGGLY_TOKEN) e.g. `kubectl create secret generic todo-app-secrets --from-literal=key='value'`
+- `kubectl apply -f deployment.yaml`
+- `kubectl apply -f service.yaml`
+- `kubectl port-forward service/module-14 7080:80`
+- Access from http://localhost:7080/
