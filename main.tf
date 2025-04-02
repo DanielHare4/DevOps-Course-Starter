@@ -55,11 +55,12 @@ resource "azurerm_linux_web_app" "main" {
 }
 
 resource "azurerm_cosmosdb_account" "main" {
-  name                = "${var.prefix}-terraformed-cosmos-db"
-  location            = data.azurerm_resource_group.main.location
-  resource_group_name = data.azurerm_resource_group.main.name
-  offer_type          = "Standard"
-  kind                = "MongoDB"
+  name                  = "${var.prefix}-terraformed-cosmos-db"
+  location              = data.azurerm_resource_group.main.location
+  resource_group_name   = data.azurerm_resource_group.main.name
+  offer_type            = "Standard"
+  kind                  = "MongoDB"
+  mongo_server_version  = "6.0"
 
   capabilities {
     name = "EnableServerless"
